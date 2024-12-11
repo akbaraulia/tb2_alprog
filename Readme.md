@@ -91,6 +91,8 @@ Sistem ini adalah aplikasi e-commerce sederhana yang memungkinkan pengguna untuk
 
 - Algoritma: Mengambil data item dari backend saat komponen dimuat.
 - Kode: 
+
+```
 useEffect(() => {
   axios.get('http://127.0.0.1:8085/items')
     .then(response => {
@@ -100,11 +102,15 @@ useEffect(() => {
       console.error('There was an error fetching the items!', error);
     });
 }, []);
+```
+
 - Penjelasan: Saat komponen App dimuat, permintaan GET dikirim ke endpoint /items untuk mengambil semua item dari backend. Data item yang diterima kemudian disimpan dalam state items.
 
 2. . Menambahkan Item ke Keranjang
 Algoritma: Menambahkan item ke keranjang belanja.
 Kode:
+
+```
 const addToCart = (item) => {
   setCartItems((prevItems) => {
     const existingItem = prevItems.find((i) => i.id === item.id);
@@ -117,6 +123,7 @@ const addToCart = (item) => {
     }
   });
 };
+```
 
 Penjelasan: Fungsi addToCart menambahkan item ke keranjang. Jika item sudah ada di keranjang, kuantitas item tersebut ditambah satu. Jika item belum ada, item baru ditambahkan ke keranjang dengan kuantitas satu.
 
@@ -125,6 +132,7 @@ Penjelasan: Fungsi addToCart menambahkan item ke keranjang. Jika item sudah ada 
 Algoritma: Menghapus item dari keranjang belanja.
 Kode:
 
+```
 const removeFromCart = (itemId) => {
   setCartItems((prevItems) =>
     prevItems
@@ -134,12 +142,15 @@ const removeFromCart = (itemId) => {
       .filter((i) => i.quantity > 0)
   );
 };
+```
 
 Penjelasan: Fungsi removeFromCart mengurangi kuantitas item di keranjang. Jika kuantitas item menjadi nol, item tersebut dihapus dari keranjang.
 
 4. Memproses Pembayaran
 Algoritma: Memvalidasi informasi kartu kredit dan mengirim data keranjang ke backend.
 Kode:
+
+```
 const processPayment = () => {
   validateCardNumber(cardNumber);
   validateExpiryDate(expiryDate);
@@ -178,6 +189,7 @@ const processPayment = () => {
       alert('Terjadi kesalahan saat memproses pembayaran');
     });
 };
+```
 
 Penjelasan: Fungsi processPayment memvalidasi informasi kartu kredit. Jika validasi berhasil, data keranjang dikirim ke backend dengan permintaan POST /cart/history. Setelah pembayaran berhasil, tanda terima ditampilkan dan keranjang dikosongkan.
 
@@ -186,6 +198,7 @@ Penjelasan: Fungsi processPayment memvalidasi informasi kartu kredit. Jika valid
 Algoritma: Mengambil riwayat pembelian dari backend dan menampilkan dalam popup.
 Kode:
 
+```
 const fetchHistory = () => {
   axios.get('http://127.0.0.1:8085/cart/history')
     .then(response => {
@@ -204,7 +217,7 @@ const fetchHistory = () => {
       console.error('There was an error fetching the history!', error);
     });
 };
-
+```
 
 Penjelasan: Fungsi fetchHistory mengirim permintaan GET /cart/history ke backend untuk mengambil riwayat pembelian. Data yang diterima kemudian diproses untuk menambahkan nama dan harga item berdasarkan item_id, dan disimpan dalam state historyItems.
 
